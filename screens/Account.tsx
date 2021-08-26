@@ -3,7 +3,7 @@ import { StyleSheet, View, Text } from "react-native";
 
 
 
-const HomeScreen = () => {
+const Account: React.FC = (props:any) => {
 
 
 
@@ -13,7 +13,7 @@ const HomeScreen = () => {
       </View>
     );
 }
-export default HomeScreen;
+export default Account;
 
 const styles = StyleSheet.create({
     viewContainer : {

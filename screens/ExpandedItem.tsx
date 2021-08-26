@@ -3,17 +3,17 @@ import { StyleSheet, View, Text } from "react-native";
 
 
 
-const Cart: React.FC = (props: any) => {
+const ExpandedItemScreen = () => {
 
 
 
     return (
       <View style={styles.viewContainer}>
-        <Text>Begin shopping cart screen</Text>
+        <Text>Begin expanded item screen</Text>
       </View>
     );
 }
-export default Cart;
+export default ExpandedItemScreen;
 
 const styles = StyleSheet.create({
     viewContainer : {

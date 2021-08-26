@@ -1,15 +1,23 @@
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Button } from "react-native";
+import { useNavigation } from '@react-navigation/native';
+import ExpandedItem from './ExpandedItem'
+import { GoToButton } from "../App";
 
 
 
-const HomeScreen = () => {
 
+
+const HomeScreen: React.FC<any> = (props: any) => {
+
+  const navigation = useNavigation<any>();
 
 
     return (
       <View style={styles.viewContainer}>
         <Text>Home Screen</Text>
+        <Button title="Go to expanded item screen" onPress={() => navigation.navigate('ExpandedItem')} />
+        
       </View>
     );
 }

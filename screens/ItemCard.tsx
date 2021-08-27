@@ -6,10 +6,34 @@ import { useNavigation } from '@react-navigation/core';
 
 
 const ItemCard = (props: any) => {
+
+    //Pulling mini card info here
+    const singleItem = props.data;
+    console.log(singleItem);
+
+    const dummyData =  [
+        {
+            id : 123,
+            image: "../assets/roswell.png",
+            name: "Roswell, NM",
+            price: 55        },
+        {
+            id: 345,
+            image: "../assets/roswell.png",
+            name: "Houston, TX",
+            price: 49
+        },
+        {
+            id: 678,
+            image: "../assets/roswell.png",
+            name: "The Jersiest of Jerseys",
+            price: 35,
+        }
+    ]
     
     const navigation = useNavigation<any>();
     const onPress = () => {
-        navigation.navigate('ExpandedItem', {props})
+        navigation.navigate('ExpandedItem', {params : singleItem})
     }
 
     return (
@@ -27,10 +51,10 @@ const ItemCard = (props: any) => {
                     />
                     <View style={styles.encasingView}>
                         <Text style={styles.itemName}> 
-                            Roswell, NM
+                            {singleItem.name}
                         </Text>                        
                             <Text style={styles.price}>
-                                {`$55`}
+                                {`${singleItem.price}`}
                             </Text>
 
                     </View>
@@ -73,7 +97,8 @@ const styles = StyleSheet.create({
     itemName: {
         fontSize: 20,
         color: "black",
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        maxWidth: 125
     },
     price: {
         fontSize: 17,

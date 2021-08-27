@@ -9,6 +9,14 @@ import ExpandedItem from './screens/ExpandedItem'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { IAppState } from './redux/store';
+import { Provider} from 'react-redux';
+import { IAppActions } from './redux/actions';
+import { createStore, Store } from 'redux';
+import { reducers } from './redux/reducers';
+
 
 
 
@@ -16,7 +24,14 @@ import { useNavigation } from '@react-navigation/native';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-function BottomNavigator() {
+//Init store
+const store: Store<IAppState, IAppActions> = createStore(reducers);
+
+
+const BottomNavigator: React.FC = () => {
+  //Pull cart count from store
+  const cartCount = useSelector((state: IAppState) => state.cartCount);
+
   return (
     <Tab.Navigator
     screenOptions={({ route }) => ({
@@ -40,7 +55,7 @@ function BottomNavigator() {
   >
     <Tab.Screen name="Explore" component={HomeScreen} />
     <Tab.Screen name="Account" component={Account} />
-    <Tab.Screen name="Cart" component={Cart} options={{ tabBarBadge: 0}}/>
+    <Tab.Screen name="Cart" component={Cart} options={{ tabBarBadge: cartCount}}/>
   </Tab.Navigator>
   )
 }
@@ -56,8 +71,10 @@ export const GoToButton: React.FC<any> = ({ screenName }) => {
 }
 
 
-export default function App() {
+const App: React.FC = () => {
   return (
+    <Provider store={store}>
+
     <NavigationContainer>
       <Stack.Navigator>
 
@@ -76,9 +93,10 @@ export default function App() {
         />
       </Stack.Navigator>
     </NavigationContainer>
+    </Provider>
   );
 }
-
+export default App;
 const styles = StyleSheet.create({
   container: {
     flex: 1,

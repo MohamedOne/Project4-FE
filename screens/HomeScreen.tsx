@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, Text, Button } from "react-native";
+import { StyleSheet, View, Text, Button, FlatList } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import ItemCard from "./ItemCard";
 
@@ -8,6 +8,26 @@ import ItemCard from "./ItemCard";
 
 
 const HomeScreen: React.FC<any> = (props: any) => {
+
+  const dummyData =  [
+    {
+        id : 123,
+        image: "../assets/roswell.png",
+        name: "Roswell, NM",
+        price: 55        },
+    {
+        id: 345,
+        image: "../assets/roswell.png",
+        name: "Houston, TX",
+        price: 49
+    },
+    {
+        id: 678,
+        image: "../assets/roswell.png",
+        name: "The Jersiest of Jerseys",
+        price: 35,
+    }
+]
 
   const navigation = useNavigation<any>();
 
@@ -18,7 +38,11 @@ const HomeScreen: React.FC<any> = (props: any) => {
                         <Text style={styles.welcomeText}>Fashion Cubed</Text>
         <Text style={styles.hotStuff}>Summer Merch</Text>
 
-        <ItemCard />
+        <FlatList
+          data={dummyData}
+          renderItem={({item}) => <ItemCard data={item}  > </ItemCard>}
+        />
+        
         
         
       </View>

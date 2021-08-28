@@ -1,3 +1,5 @@
+import { IUser } from "../models/User";
+
 export enum AppAction {
     LOGIN = 'Login',
     LOGOUT = 'Logout',
@@ -11,8 +13,9 @@ export interface IAppActions {
     payload: {
         auth?: any,
         cartCount: number,
-        cart?: any,
-        merchandise?: any
+        cart?: any[],
+        merchandise?: any,
+        user?: IUser
 
     }
 }

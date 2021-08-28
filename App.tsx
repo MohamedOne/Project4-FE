@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button, ImageBackground } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import HomeScreen from './screens/HomeScreen'
@@ -16,6 +16,7 @@ import { Provider} from 'react-redux';
 import { IAppActions } from './redux/actions';
 import { createStore, Store } from 'redux';
 import { reducers } from './redux/reducers';
+import Toast from 'react-native-toast-message';
 
 
 
@@ -75,25 +76,29 @@ const App: React.FC = () => {
   return (
     <Provider store={store}>
 
-    <NavigationContainer>
-      <Stack.Navigator>
+      <NavigationContainer>
+        <Stack.Navigator>
 
-        <Stack.Screen 
-          name="BottomTabs" 
-          component={BottomNavigator}  
-          options={{ headerShown: false }}  
-        />
-       <Stack.Screen
-          name="ExpandedItem"
-          component={ExpandedItem}
-        />
+          <Stack.Screen 
+            name="BottomTabs" 
+            component={BottomNavigator}  
+            options={{ headerShown: false }}  
+          />
         <Stack.Screen
-          name="HomeScreen"
-          component={HomeScreen}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+            name="ExpandedItem"
+            component={ExpandedItem}
+          />
+          <Stack.Screen
+            name="HomeScreen"
+            component={HomeScreen}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+
+      <Toast ref={(ref: any) => Toast.setRef(ref)} />
+
     </Provider>
+
   );
 }
 export default App;

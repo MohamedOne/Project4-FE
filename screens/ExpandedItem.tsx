@@ -16,8 +16,8 @@ const ExpandedItemScreen: React.FC= (props: any) => {
     const[quantity, setQuantity] = useState("1");
     
     //Grab cart and cart quantity
-    const initialCart: number = useSelector((state: IAppState) => state.cartCount);
-    const cart: any = useSelector((state: IAppState) => state.cart);
+    const initialCartCount: number = useSelector((state: IAppState) => state.cartCount);
+    const initialCart: any = useSelector((state: IAppState) => state.cart);
     const navigation = useNavigation<any>();
     let parseQuant = parseInt(quantity, 10);
 
@@ -32,24 +32,28 @@ const ExpandedItemScreen: React.FC= (props: any) => {
 
     //Add item to cart, redux, update cart badge
     const onPress = () => {
-        let newCartCount = initialCart + parseQuant;
+        let newCartCount = initialCartCount + parseQuant;
+
         console.log(newCartCount);
-        dispatch({
-            type: AppAction.UPDATE_CART_COUNT,
-            payload: {
-                cartCount: newCartCount
-            }
-        })
-        //Second dispatch reflects cart's belongings
-        itemData['quantity'] = parseQuant;
-        itemData['size'] = clothingSize;
+        console.log(initialCart);
+
+
+        const addToCart = {
+            id : itemData.id,
+            image : itemData.image,
+            name : itemData.name,
+            price : itemData.price,
+            quantity : quantity,
+            size : clothingSize
+        }
         dispatch({
             type: AppAction.UPDATE_CART,
             payload: {
-                cart: itemData
+                cartCount: newCartCount,
+                cart: addToCart
             }
         })
-        console.log(cart);
+  
         navigation.navigate('Explore');
     }
 
@@ -130,7 +134,7 @@ const styles = StyleSheet.create({
     },
     working: {
         flexDirection: 'row',
-        alignContent: 'center'
+        alignContent: 'center',
 
     },
     notWorking: {
@@ -141,6 +145,9 @@ const styles = StyleSheet.create({
         width: 220, 
         alignContent: 'center', 
         borderRadius: 100,
+        borderColor: 'black',
+        borderWidth: 1
+
     }
 })
 

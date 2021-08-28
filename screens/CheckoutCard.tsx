@@ -1,84 +1,81 @@
 import React from 'react'
 import { StyleSheet, View, Text, Button, Image, TouchableOpacity } from "react-native";
-import { Card } from 'react-native-elements'
+import { Card, Icon } from 'react-native-elements'
 import { useNavigation } from '@react-navigation/core';
+import Toast from 'react-native-toast-message';
 
 
 
-const ItemCard = (props: any) => {
+const CheckoutCard = (props: any) => {
 
-    //Pulling mini card info here
+    //Pulling individual cart info here
     const singleItem = props.data;
     console.log(singleItem);
 
-    const dummyData =  [
-        {
-            id : 123,
-            image: "../assets/roswell.png",
-            name: "Roswell, NM",
-            price: 55        },
-        {
-            id: 345,
-            image: "../assets/roswell.png",
-            name: "Houston, TX",
-            price: 49
-        },
-        {
-            id: 678,
-            image: "../assets/roswell.png",
-            name: "The Jersiest of Jerseys",
-            price: 35,
-        }
-    ]
-    
+
     const navigation = useNavigation<any>();
     const onPress = () => {
-        navigation.navigate('ExpandedItem', {params : singleItem})
+        navigation.navigate('ExpandedItem', { params: singleItem })
+    }
+
+    const deleteFromCart = () => {
+        Toast.show({type: 'success', text1: 'Item successfully deleted from cart'});
+
     }
 
     return (
         <View style={styles.cardOuterView} >
-            <Card containerStyle={styles.cardContainer}>
-                <TouchableOpacity
-                    onPress={onPress}
-                >
-                <View style={styles.encasingViewMargin}>
-                <View style={styles.encasingViewOuter}>
 
-                    <Image
+            <Card containerStyle={styles.cardContainer}>
+
+                <View style={styles.encasingViewMargin}>
+                    <View style={styles.encasingViewOuter}>
+
+                        <Image
                             source={require('../assets/roswell.png')}
                             style={styles.image}
-                    />
-                    <View style={styles.encasingView}>
-                        <Text style={styles.itemName}> 
-                            {singleItem.name}
-                        </Text>                        
+                        />
+                        <View style={styles.encasingView}>
+                            <Text style={styles.itemName}>
+                                {singleItem.name}
+                            </Text>
                             <Text style={styles.price}>
-                                {`${singleItem.price}`}
+                                {`${singleItem.price * singleItem.quantity}`}
+                            </Text>
+                            <Text style={{fontWeight: 'bold'}}>
+                                {`Size: ${singleItem.size}`}
+                            </Text>
+                            <Text style={{}}>
+                                {`Quantity: ${singleItem.quantity}`}
                             </Text>
 
-                    </View>
+                        </View>
 
-                </View>
-                <View style={styles.encaseRedirectIcon}>
-                    <Image
-                                source={require('../assets/redirectIcon.png')}
-                                style={styles.redirectIcon}
+                    </View>
+                    <View style={styles.encaseRedirectIcon}>
+                        <TouchableOpacity
+                            onPress={deleteFromCart}
+                        >
+                            <Icon
+                                name='close'
+                                type='ionicon'
+                                color='black'
                             />
+                        </TouchableOpacity>
+
                     </View>
                 </View>
-                </TouchableOpacity>
 
             </Card>
         </View>
     )
 }
-export default ItemCard
+export default CheckoutCard
 
 const styles = StyleSheet.create({
     cardOuterView: {
         flex: 1,
-        
+        justifyContent: 'center'
     },
     cardContainer: {
         borderRadius: 10,
@@ -123,7 +120,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     encasingViewMargin: {
-        flexDirection : 'row',
+        flexDirection: 'row',
         justifyContent: 'space-evenly'
     },
     encaseRedirectIcon: {

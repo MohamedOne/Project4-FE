@@ -1,11 +1,13 @@
 import React from "react";
 import { StyleSheet, View, Text, Image, TextInput, TouchableOpacity, ImageBackground } from "react-native";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AppAction } from "../redux/actions";
 import Toast from "react-native-toast-message";
 import { useNavigation } from "@react-navigation/native";
 import LoginCard from "./Login";
+import SignUpCard from "./SignUpCard";
+import { IAppState } from "../redux/store";
 
 const image = { uri: 'https://belmontstudios.com/wp-content/uploads/marble-with-gold-gold-marble-by-blue-gold-marble-background-gold-marble-wallpaper-uk.jpg' };
 
@@ -13,28 +15,48 @@ const Account: React.FC = (props: any) => {
 
     const [userName, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const isSigningUp = useSelector((state: IAppState) => state.isSigningUp)
+
 
     const dispatch = useDispatch();
     const navigation = useNavigation();
     const submit = () => {
-        Toast.show({
-            type: 'success',
-            text1: 'Glad to see you!'
-        })
-        dispatch({
-            type: AppAction.LOGIN,
-            payload: {
-                cartCount: 0,
-                user : {
-                    username: userName,
-                    password: password
+        if (userName == "" || password === "") {
+            Toast.show({
+                type: 'error',
+                text1: 'Missing username or password'
+            })
+            return
+        } else {
+            Toast.show({
+                type: 'success',
+                text1: 'Glad to have you!'
+            })
+            dispatch({
+                type: AppAction.LOGIN,
+                payload: {
+                    cartCount: 0,
+                    user: {
+                        username: userName,
+                        password: password
+                    }
                 }
-            }
-        })
+            })
 
-        navigation.goBack();
-        
+            navigation.goBack();
+        }
     }
+    const redirectToSignUp = () => {
+        dispatch({
+            type: AppAction.SWITCH_LOGIN_SIGNUP,
+            payload: {
+                isSigningUp: true
+            }
+            
+        })
+    
+    }
+
 
     return (
         <View style={{ flex: 1, justifyContent: 'space-evenly' }}>
@@ -42,14 +64,19 @@ const Account: React.FC = (props: any) => {
             >
 
                 <View style={{}}>
-                <Image
-                            source={require('../assets/hypercube.png')}
-                            style={styles.image}
-                        />
-                        <Text style={styles.welcomeText}>Fashion Cubed</Text>
+                    <Image
+                        source={require('../assets/hypercube.png')}
+                        style={styles.image}
+                    />
+                    <Text style={styles.welcomeText}>Fashion Cubed</Text>
                 </View>
 
-            <LoginCard />
+            {isSigningUp? <SignUpCard /> : <LoginCard /> }
+                
+                
+
+
+
             </ImageBackground>
         </View>
 

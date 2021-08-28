@@ -2,16 +2,15 @@ import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react"
 import { View, TextInput, TouchableOpacity, Text, StyleSheet, Image } from "react-native"
 import Toast from "react-native-toast-message";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { AppAction } from "../redux/actions";
-import { IAppState } from "../redux/store";
 
 
-const LoginCard = () => {
+const SignUpCard = () => {
 
     const [userName, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const isSigningUp = useSelector((state: IAppState) => state.isSigningUp)
+    const[isSigningUp, setIsSigningUp] = useState(false);
 
 
     const dispatch = useDispatch();
@@ -45,14 +44,8 @@ const LoginCard = () => {
     }
 
     const redirectToSignUp = () => {
-        dispatch({
-            type: AppAction.SWITCH_LOGIN_SIGNUP,
-            payload: {
-                isSigningUp: true
-            }
-            
-        })
-    
+        setIsSigningUp(false);
+        navigation.goBack()
     }
 
     return (
@@ -75,25 +68,21 @@ const LoginCard = () => {
             style={styles.working}
             onPress={() => submit()}>
             <Text
-                style={styles.text}>Submit</Text>
+                style={styles.text}>Sign Up!</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity 
-                    onPress={redirectToSignUp}
-                >
-                <Text style={styles.newUserText}>New User? Sign Up</Text>
+
                 <Image
                         source={require('../assets/hypercube.png')}
                         style={styles.smallImage}
                     />
 
-                </TouchableOpacity>
     </View>
 
     
     )
 }
-export default LoginCard
+export default SignUpCard
 
 const styles = StyleSheet.create({
     outerContainer: {

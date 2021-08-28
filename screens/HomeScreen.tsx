@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import ItemCard from "./ItemCard";
 import { ImageBackground } from "react-native";
 
+
 const image = { uri: 'https://belmontstudios.com/wp-content/uploads/marble-with-gold-gold-marble-by-blue-gold-marble-background-gold-marble-wallpaper-uk.jpg' };
 
 

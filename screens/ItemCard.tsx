@@ -2,7 +2,8 @@ import React from 'react'
 import { StyleSheet, View, Text, Button, Image, TouchableOpacity } from "react-native";
 import { Card } from 'react-native-elements'
 import { useNavigation } from '@react-navigation/core';
-
+import { LinearGradient } from "expo-linear-gradient";
+import { Animated } from "react-native";
 
 
 const ItemCard = (props: any) => {

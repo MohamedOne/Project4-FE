@@ -1,10 +1,14 @@
-import React from "react";
-import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
 import { useSelector } from "react-redux";
 import { IAppState } from "../redux/store";
 import CheckoutCard from "./CheckoutCard";
 import { FlatList } from "react-native";
 import { ImageBackground } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import BlankCartCard from "./BlankCartCard";
+import NotLoggedCartCard from "./NotLoggedCartCard";
+import LoggedInCartCard from "./LoggedInCartCard";
 const image = { uri: 'https://belmontstudios.com/wp-content/uploads/marble-with-gold-gold-marble-by-blue-gold-marble-background-gold-marble-wallpaper-uk.jpg' };
 
 
@@ -12,43 +16,49 @@ const Cart: React.FC = (props: any) => {
 
     //Pull down state variables
     const initialCart: any = useSelector((state: IAppState) => state.cart);
-    const initialCartCount = useSelector((state: IAppState) => state.cartCount);
+    const user: any = useSelector((state:IAppState) => state.user);
+    let finalPrice: number = 0;
+    let hasCart: boolean = false;
+    let hasUser: boolean = false;
+
+    const navigation = useNavigation<any>();
+
+    if (initialCart.length > 0) {
+        hasCart = true;
+    }
+
+    if(user !== undefined) {
+        hasUser = true;
+    }
 
     const onPress = () => {
-        return
+        navigation.navigate('Account');
     }
 
-    const calculateTotal = () => {
-        let finalPrice: number = 0;
-        for(let i = 0; i < initialCart.length; i++) {
-            finalPrice += initialCart[i].price * initialCart[i].quantity;
-        }
-
-        return finalPrice;
-    }
 
     return (
-        <View style={styles.viewContainer}>
-            <ImageBackground source={image} resizeMode="cover" style={{ justifyContent: 'center', flex: 1 }}
-            >
-                <Text style={styles.cartText}>Checkout: </Text>
+        <View style={{ flex: 1 }}>
+            {!hasCart ? <BlankCartCard /> :
 
-                <FlatList
-                    data={initialCart}
-                    renderItem={({ item }) => <CheckoutCard data={item}  > </CheckoutCard>}
-                />
+                <View style={styles.viewContainer}>
+                    <ImageBackground source={image} resizeMode="cover" style={{ justifyContent: 'center', flex: 1 }}
+                    >
+                        <Text style={styles.cartText}>Checkout: </Text>
 
-                <Text style={styles.finalPrice}>Total: {calculateTotal()}</Text>
+                        <FlatList
+                            data={initialCart}
+                            renderItem={({ item }) => <CheckoutCard data={item}  > </CheckoutCard>}
+                        />
 
-                <View style={{ flex: 1, paddingLeft: 19 }}>
-                    <TouchableOpacity style={styles.working} onPress={() => { onPress() }}>
-                        <View style={styles.touchableButton}>
-                            <Text style={{ fontSize: 19, textAlign: 'center' }}>Login for 10% off your order!</Text>
-                        </View>
-                    </TouchableOpacity>
+                    {!hasUser? <NotLoggedCartCard /> : <LoggedInCartCard /> }                     
+
+                    </ImageBackground>
                 </View>
-            </ImageBackground>
+            }
+
         </View>
+
+
     );
 }
 export default Cart;
@@ -64,7 +74,7 @@ const styles = StyleSheet.create({
     },
     touchableButton: {
         backgroundColor: '#03c6fc',
-        width: 270,
+        width: 240,
         alignContent: 'center',
         borderRadius: 100,
         borderColor: 'black',
@@ -77,9 +87,31 @@ const styles = StyleSheet.create({
     },
     finalPrice: {
         fontSize: 19,
-        paddingLeft: 19,
+        paddingLeft: 5,
+        fontWeight: 'bold',
+    },
+    shipping: {
+        fontSize: 19,
+        paddingLeft: 5,
         fontWeight: 'bold'
-    }
+    },
+    finalPriceShipping: {
+        fontSize: 19,
+        paddingLeft: 5,
+        fontWeight: 'bold'
+    },
+    encasingViewPopulatedCart: {
+        backgroundColor: 'white',
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: 'black',
+        alignSelf: 'center',
+        maxHeight: 140,
+        maxWidth: 400,
+        padding: 5,
+        elevation: 10
+    },
+
 })
 
 

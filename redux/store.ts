@@ -2,10 +2,11 @@ import { IUser } from "../models/User"
 
 export interface IAppState {
     auth?: any;
-    cartCount: number;
+    cartCount?: number;
     merchandise?: any;
     cart?: any;
-    user?: IUser
+    user?: IUser;
+    isSigningUp?: boolean
 }
 
 export const initialState: IAppState ={
@@ -13,5 +14,6 @@ export const initialState: IAppState ={
     cartCount: 0,
     merchandise: undefined,
     cart: [],
-    user: undefined
+    user: undefined,
+    isSigningUp: false
 }

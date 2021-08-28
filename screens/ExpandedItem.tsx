@@ -16,7 +16,7 @@ const ExpandedItemScreen: React.FC= (props: any) => {
     const[quantity, setQuantity] = useState("1");
     
     //Grab cart and cart quantity
-    const initialCartCount: number = useSelector((state: IAppState) => state.cartCount);
+    const initialCartCount: any = useSelector((state: IAppState) => state.cartCount);
     const initialCart: any = useSelector((state: IAppState) => state.cart);
     const navigation = useNavigation<any>();
     let parseQuant = parseInt(quantity, 10);

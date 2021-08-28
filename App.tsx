@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, ImageBackground } from 'react-native';
+import { StyleSheet, Text, View, Button, ImageBackground, Image } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import HomeScreen from './screens/HomeScreen'
@@ -17,8 +17,6 @@ import { IAppActions } from './redux/actions';
 import { createStore, Store } from 'redux';
 import { reducers } from './redux/reducers';
 import Toast from 'react-native-toast-message';
-
-
 
 
 //Begin stack navigator functionality -- take care 
@@ -72,6 +70,8 @@ export const GoToButton: React.FC<any> = ({ screenName }) => {
 }
 
 
+
+
 const App: React.FC = () => {
   return (
     <Provider store={store}>
@@ -91,6 +91,7 @@ const App: React.FC = () => {
           <Stack.Screen
             name="HomeScreen"
             component={HomeScreen}
+
           />
         </Stack.Navigator>
       </NavigationContainer>

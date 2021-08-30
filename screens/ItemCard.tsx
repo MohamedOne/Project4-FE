@@ -20,7 +20,7 @@ const ItemCard = (props: any) => {
     
     const navigation = useNavigation<any>();
     const onPress = () => {
-        navigation.navigate('ExpandedItem', {params : singleItem})
+        navigation.navigate('More', {params : singleItem})
     }
 
     return (

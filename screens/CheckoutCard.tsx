@@ -31,11 +31,11 @@ const CheckoutCard = (props: any) => {
         dispatch({
             type: AppAction.REMOVE_CART_ITEM,
             payload: {
-                cartItem : singleItem,
+                cartItem: singleItem,
                 cartCount: cartCount - singleItem.quantity
             }
         })
-        Toast.show({type: 'success', text1: 'Item successfully deleted from cart'});
+        Toast.show({ type: 'success', text1: 'Item successfully deleted from cart' });
         navigation.navigate('Cart');
     }
 
@@ -43,46 +43,46 @@ const CheckoutCard = (props: any) => {
         <View style={styles.cardOuterView} >
 
             <Card containerStyle={styles.cardContainer} >
-            <AnimatedLinearGradient
-    colors={["rgba(255,255,255, 0)", "rgba(230,230,230, 1)"]}
-    style={{ flex: 1, justifyContent: 'flex-start', borderRadius: 5 }}>
-                <View style={styles.encasingViewMargin}>
-                    <View style={styles.encasingViewOuter}>
+                <AnimatedLinearGradient
+                    colors={["rgba(255,255,255, 0)", "rgba(230,230,230, 1)"]}
+                    style={{ flex: 1, justifyContent: 'flex-start', borderRadius: 5 }}>
+                    <View style={styles.encasingViewMargin}>
+                        <View style={styles.encasingViewOuter}>
 
-                        <Image
-                            source={require('../assets/roswell.png')}
-                            style={styles.image}
-                        />
-                        <View style={styles.encasingView}>
-                            <Text style={styles.itemName}>
-                                {singleItem.name}
-                            </Text>
-                            <Text style={styles.price}>
-                                {`${singleItem.price * singleItem.quantity}`}
-                            </Text>
-                            <Text style={{fontWeight: 'bold'}}>
-                                {`Size: ${singleItem.size}`}
-                            </Text>
-                            <Text style={{}}>
-                                {`Quantity: ${singleItem.quantity}`}
-                            </Text>
+                            <Image
+                                source={{ uri: `${singleItem.image}` }}
+                                style={styles.image}
+                            />
+                            <View style={styles.encasingView}>
+                                <Text style={styles.itemName}>
+                                    {singleItem.name}
+                                </Text>
+                                <Text style={styles.price}>
+                                    {`${singleItem.price * singleItem.quantity}`}
+                                </Text>
+                                <Text style={{ fontWeight: 'bold' }}>
+                                    {`Size: ${singleItem.size}`}
+                                </Text>
+                                <Text style={{}}>
+                                    {`Quantity: ${singleItem.quantity}`}
+                                </Text>
+
+                            </View>
 
                         </View>
+                        <View style={styles.encaseRedirectIcon}>
+                            <TouchableOpacity
+                                onPress={deleteFromCart}
+                            >
+                                <Icon
+                                    name='close'
+                                    type='ionicon'
+                                    color='black'
+                                />
+                            </TouchableOpacity>
 
+                        </View>
                     </View>
-                    <View style={styles.encaseRedirectIcon}>
-                        <TouchableOpacity
-                            onPress={deleteFromCart}
-                        >
-                            <Icon
-                                name='close'
-                                type='ionicon'
-                                color='black'
-                            />
-                        </TouchableOpacity>
-
-                    </View>
-                </View>
                 </AnimatedLinearGradient>
 
             </Card>

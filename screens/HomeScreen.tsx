@@ -19,6 +19,7 @@ const HomeScreen: React.FC<any> = (props: any) => {
   let tempStruct = {};
 
   const dispatch = useDispatch();
+  useEffect(() => {grabMerchData()}, [])
 
   const body = useSelector((state: IAppState) => state.merchandise);
 
@@ -80,17 +81,10 @@ const HomeScreen: React.FC<any> = (props: any) => {
             merchandise: temp
           }
         })
-        //console.log(body);
       })
   }
 
-  useEffect(() => {grabMerchData()}, [])
-
-
-
-
   const navigation = useNavigation<any>();
-
 
   return (
 

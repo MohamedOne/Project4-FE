@@ -14,18 +14,20 @@ import { useSelector } from 'react-redux';
 import { IAppState } from './redux/store';
 import { Provider } from 'react-redux';
 import { IAppActions } from './redux/actions';
-import { createStore, Store } from 'redux';
+import { createStore, Store, applyMiddleware } from 'redux';
+import createSagaMiddleware from '@redux-saga/core';
 import { reducers } from './redux/reducers';
 import Toast from 'react-native-toast-message';
-
+import merchFetchSaga from './sagas';
 
 //Begin stack navigator functionality -- take care 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 //Init store
-const store: Store<IAppState, IAppActions> = createStore(reducers);
-
+const sagaMiddleware = createSagaMiddleware();
+const store: Store<IAppState, IAppActions> = createStore(reducers, applyMiddleware(sagaMiddleware));
+sagaMiddleware.run(merchFetchSaga);
 
 const BottomNavigator: React.FC = () => {
   //Pull cart count from store
@@ -112,7 +114,7 @@ const App: React.FC = () => {
             options={{ headerShown: false }}
           />
           <Stack.Screen
-            name="ExpandedItem"
+            name="More"
             component={ExpandedItem}
           />
           <Stack.Screen
@@ -121,12 +123,11 @@ const App: React.FC = () => {
             options={{
 
               headerRight: () => (
-                <Button
-                  onPress={() => alert('This is a button!')}
-                  title="Info"
-                  color="#fff"
+                <Image
+                  source={require('./assets/hypercube.png')}
+                  style={styles.smallimage}
                 />
-              ),
+              )
             }}
 
           />

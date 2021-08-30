@@ -17,6 +17,12 @@ export const reducers = (state: IAppState = initialState, action: IAppActions): 
             return {...state, merchandise: action.payload?.merchandise};
         case AppAction.SWITCH_LOGIN_SIGNUP:
             return {...state, isSigningUp: action.payload?.isSigningUp};
+        case AppAction.REMOVE_CART_ITEM:
+            return {
+                ...state, 
+                cart: state.cart?.filter((item: any) => item !== action.payload.cartItem),
+                cartCount: action.payload.cartCount    
+            }
         default:
             return newState;
     }

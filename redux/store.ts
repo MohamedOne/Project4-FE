@@ -12,7 +12,7 @@ export interface IAppState {
 export const initialState: IAppState ={
     auth: undefined,
     cartCount: 0,
-    merchandise: undefined,
+    merchandise: [],
     cart: [],
     user: undefined,
     isSigningUp: false

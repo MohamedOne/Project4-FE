@@ -6,7 +6,8 @@ export enum AppAction {
     UPDATE_CART = 'Update Cart',
     UPDATE_CART_COUNT = 'Update Cart Count',
     SET_MERCHANDISE = 'Set Merchandise',
-    SWITCH_LOGIN_SIGNUP = 'Flip Card Boolean'
+    SWITCH_LOGIN_SIGNUP = 'Flip Card Boolean',
+    REMOVE_CART_ITEM = 'Remove Cart Item'
 }
 
 export interface IAppActions {
@@ -17,7 +18,8 @@ export interface IAppActions {
         cart?: any[],
         merchandise?: any,
         user?: IUser,
-        isSigningUp?: boolean
+        isSigningUp?: boolean,
+        cartItem: any
 
     }
 }

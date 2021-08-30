@@ -3,7 +3,11 @@ import { StyleSheet, View, Text, Button, Image, TouchableOpacity } from "react-n
 import { Card, Icon } from 'react-native-elements'
 import { useNavigation } from '@react-navigation/core';
 import Toast from 'react-native-toast-message';
-
+import { LinearGradient } from "expo-linear-gradient";
+import { Animated } from "react-native";
+import { useDispatch, useSelector } from 'react-redux';
+import { AppAction } from '../redux/actions';
+import { IAppState } from '../redux/store';
 
 
 const CheckoutCard = (props: any) => {
@@ -12,22 +16,36 @@ const CheckoutCard = (props: any) => {
     const singleItem = props.data;
     console.log(singleItem);
 
+    const AnimatedLinearGradient = Animated.createAnimatedComponent(LinearGradient);
+
+    const cartCount: any = useSelector((state: IAppState) => state.cartCount);
 
     const navigation = useNavigation<any>();
+    const dispatch = useDispatch();
+
     const onPress = () => {
         navigation.navigate('ExpandedItem', { params: singleItem })
     }
 
     const deleteFromCart = () => {
+        dispatch({
+            type: AppAction.REMOVE_CART_ITEM,
+            payload: {
+                cartItem : singleItem,
+                cartCount: cartCount - singleItem.quantity
+            }
+        })
         Toast.show({type: 'success', text1: 'Item successfully deleted from cart'});
-
+        navigation.navigate('Cart');
     }
 
     return (
         <View style={styles.cardOuterView} >
 
-            <Card containerStyle={styles.cardContainer}>
-
+            <Card containerStyle={styles.cardContainer} >
+            <AnimatedLinearGradient
+    colors={["rgba(255,255,255, 0)", "rgba(230,230,230, 1)"]}
+    style={{ flex: 1, justifyContent: 'flex-start', borderRadius: 5 }}>
                 <View style={styles.encasingViewMargin}>
                     <View style={styles.encasingViewOuter}>
 
@@ -65,6 +83,7 @@ const CheckoutCard = (props: any) => {
 
                     </View>
                 </View>
+                </AnimatedLinearGradient>
 
             </Card>
         </View>

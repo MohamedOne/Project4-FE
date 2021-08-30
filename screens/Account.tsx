@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, View, Text, Image, TextInput, TouchableOpacity, ImageBackground } from "react-native";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,6 +8,8 @@ import { useNavigation } from "@react-navigation/native";
 import LoginCard from "./Login";
 import SignUpCard from "./SignUpCard";
 import { IAppState } from "../redux/store";
+import * as Font from 'expo-font';
+
 
 const image = { uri: 'https://belmontstudios.com/wp-content/uploads/marble-with-gold-gold-marble-by-blue-gold-marble-background-gold-marble-wallpaper-uk.jpg' };
 
@@ -17,6 +19,19 @@ const Account: React.FC = (props: any) => {
     const [password, setPassword] = useState("");
     const isSigningUp = useSelector((state: IAppState) => state.isSigningUp)
 
+
+
+  useEffect(() => {
+    async function getFonts() {
+        Font.loadAsync({
+            'oswaldesque-regular': require('../assets/fonts/Oswaldesque-Regular.ttf'),
+            'oswaldesque-bold': require('../assets/fonts/Oswaldesque-Bold.ttf'),
+            'oswaldesque-light': require('../assets/fonts/Oswaldesque-Light.ttf')
+        
+          });
+    }
+    getFonts();
+  }, []);
 
     const dispatch = useDispatch();
     const navigation = useNavigation();

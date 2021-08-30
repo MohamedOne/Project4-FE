@@ -14,7 +14,7 @@ const SignUpCard = () => {
 
 
     const dispatch = useDispatch();
-    const navigation = useNavigation();
+    const navigation = useNavigation<any>();
     const submit = () => {
         if (userName == "" || password === "") {
             Toast.show({
@@ -41,6 +41,16 @@ const SignUpCard = () => {
             navigation.goBack();
         }
         
+    }
+
+    const onPress = () => {
+        dispatch({
+            type: AppAction.SWITCH_LOGIN_SIGNUP,
+            payload: {
+                isSigningUp: false
+            }
+            
+        })
     }
 
     const redirectToSignUp = () => {
@@ -71,11 +81,16 @@ const SignUpCard = () => {
                 style={styles.text}>Sign Up!</Text>
         </TouchableOpacity>
 
-
+        <TouchableOpacity
+            onPress={onPress}
+        >
                 <Image
                         source={require('../assets/hypercube.png')}
                         style={styles.smallImage}
                     />
+
+        </TouchableOpacity>
+
 
     </View>
 

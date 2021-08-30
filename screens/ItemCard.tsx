@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { StyleSheet, View, Text, Button, Image, TouchableOpacity } from "react-native";
 import { Card } from 'react-native-elements'
 import { useNavigation } from '@react-navigation/core';
@@ -12,25 +12,11 @@ const ItemCard = (props: any) => {
     const singleItem = props.data;
     console.log(singleItem);
 
-    const dummyData =  [
-        {
-            id : 123,
-            image: "../assets/roswell.png",
-            name: "Roswell, NM",
-            price: 55        },
-        {
-            id: 345,
-            image: "../assets/roswell.png",
-            name: "Houston, TX",
-            price: 49
-        },
-        {
-            id: 678,
-            image: "../assets/roswell.png",
-            name: "The Jersiest of Jerseys",
-            price: 35,
-        }
-    ]
+    useEffect(() => console.log(props.data.id), []);
+
+    const AnimatedLinearGradient = Animated.createAnimatedComponent(LinearGradient);
+
+
     
     const navigation = useNavigation<any>();
     const onPress = () => {
@@ -39,7 +25,11 @@ const ItemCard = (props: any) => {
 
     return (
         <View style={styles.cardOuterView} >
+ 
             <Card containerStyle={styles.cardContainer}>
+            <AnimatedLinearGradient
+    colors={["rgba(255,255,255, 0)", "rgba(230,230,230, 1)"]}
+    style={{ flex: 1, justifyContent: 'flex-start', borderRadius: 5 }}>
                 <TouchableOpacity
                     onPress={onPress}
                 >
@@ -47,7 +37,7 @@ const ItemCard = (props: any) => {
                 <View style={styles.encasingViewOuter}>
 
                     <Image
-                            source={require('../assets/roswell.png')}
+                            source={{uri: `${singleItem.image}`}}
                             style={styles.image}
                     />
                     <View style={styles.encasingView}>
@@ -69,6 +59,7 @@ const ItemCard = (props: any) => {
                     </View>
                 </View>
                 </TouchableOpacity>
+                </AnimatedLinearGradient>
 
             </Card>
         </View>
@@ -78,17 +69,20 @@ export default ItemCard
 
 const styles = StyleSheet.create({
     cardOuterView: {
-        flex: 1,
+      
         
     },
     cardContainer: {
+        
         borderRadius: 10,
         borderColor: 'black',
         borderWidth: 2,
         backgroundColor: 'white',
         justifyContent: 'center',
         maxWidth: 340,
-        elevation: 10
+        elevation: 10,
+        tintColor: "rgb(230, 230, 230)",
+        overlayColor: "rgb(230, 230, 230)"
 
     },
     image: {

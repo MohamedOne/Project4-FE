@@ -35,7 +35,6 @@ const Cart: React.FC = (props: any) => {
         navigation.navigate('Account');
     }
 
-
     return (
         <View style={{ flex: 1 }}>
             {!hasCart ? <BlankCartCard /> :

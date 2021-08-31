@@ -17,12 +17,15 @@ const HomeScreen: React.FC<any> = (props: any) => {
 
   let temp: any = [];
   let tempStruct = {};
+  const navigation = useNavigation<any>();
+
 
   const dispatch = useDispatch();
   useEffect(() => {grabMerchData()}, [])
+  
 
   const body = useSelector((state: IAppState) => state.merchandise);
-
+  
   const dummyData = [
     {
       id: 123,
@@ -63,28 +66,23 @@ const HomeScreen: React.FC<any> = (props: any) => {
   ]
 
   const grabMerchData = async () => {
-    await axios.get('https://wi6pqlczjk.execute-api.us-east-1.amazonaws.com/StageZero/merch')
-      .then((response: any) => {
-        let body = response.data;
-        for(let i =0; i < body.length; i++){
-          tempStruct = {
-            id : parseInt(body[i].id),
-            image : body[i].image,
-            name : body[i].name,
-            price : body[i].price
-          }
-          temp.push(tempStruct);
+    dispatch({
+      type: 'SET_GET_MERCHANDISE',
+      payload: {
+        merchandise: temp
+      }
+    })
+    console.log(body);
+    const response : any = await axios.get('https://wi6pqlczjk.execute-api.us-east-1.amazonaws.com/StageZero/merch')
+
+      dispatch({
+        type: AppAction.SET_MERCHANDISE,
+        payload: {
+          merchandise : response.data
         }
-        dispatch({
-          type: AppAction.SET_MERCHANDISE,
-          payload: {
-            merchandise: temp
-          }
-        })
       })
   }
 
-  const navigation = useNavigation<any>();
 
   return (
 

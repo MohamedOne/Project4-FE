@@ -7,7 +7,8 @@ export enum AppAction {
     UPDATE_CART_COUNT = 'Update Cart Count',
     SET_MERCHANDISE = 'Set Merchandise',
     SWITCH_LOGIN_SIGNUP = 'Flip Card Boolean',
-    REMOVE_CART_ITEM = 'Remove Cart Item'
+    REMOVE_CART_ITEM = 'Remove Cart Item',
+    SET_GET_MERCHANDISE = "Test Saga call"
 }
 
 export interface IAppActions {

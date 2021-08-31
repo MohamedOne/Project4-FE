@@ -10,55 +10,54 @@ const ItemCard = (props: any) => {
 
     //Pulling mini card info here
     const singleItem = props.data;
-    console.log(singleItem);
 
     useEffect(() => console.log(props.data.id), []);
 
     const AnimatedLinearGradient = Animated.createAnimatedComponent(LinearGradient);
 
 
-    
+
     const navigation = useNavigation<any>();
     const onPress = () => {
-        navigation.navigate('More', {params : singleItem})
+        navigation.navigate('More', { params: singleItem })
     }
 
     return (
         <View style={styles.cardOuterView} >
- 
+
             <Card containerStyle={styles.cardContainer}>
-            <AnimatedLinearGradient
-    colors={["rgba(255,255,255, 0)", "rgba(230,230,230, 1)"]}
-    style={{ flex: 1, justifyContent: 'flex-start', borderRadius: 5 }}>
-                <TouchableOpacity
-                    onPress={onPress}
-                >
-                <View style={styles.encasingViewMargin}>
-                <View style={styles.encasingViewOuter}>
+                <AnimatedLinearGradient
+                    colors={["rgba(255,255,255, 0)", "rgba(230,230,230, 1)"]}
+                    style={{ flex: 1, justifyContent: 'flex-start', borderRadius: 5 }}>
+                    <TouchableOpacity
+                        onPress={onPress}
+                    >
+                        <View style={styles.encasingViewMargin}>
+                            <View style={styles.encasingViewOuter}>
 
-                    <Image
-                            source={{uri: `${singleItem.image}`}}
-                            style={styles.image}
-                    />
-                    <View style={styles.encasingView}>
-                        <Text style={styles.itemName}> 
-                            {singleItem.name}
-                        </Text>                        
-                            <Text style={styles.price}>
-                                {`${singleItem.price}`}
-                            </Text>
+                                <Image
+                                    source={{ uri: `${singleItem.image}` }}
+                                    style={styles.image}
+                                />
+                                <View style={styles.encasingView}>
+                                    <Text style={styles.itemName}>
+                                        {singleItem.name}
+                                    </Text>
+                                    <Text style={styles.price}>
+                                        {`${singleItem.price}`}
+                                    </Text>
 
-                    </View>
+                                </View>
 
-                </View>
-                <View style={styles.encaseRedirectIcon}>
-                    <Image
-                                source={require('../assets/redirectIcon.png')}
-                                style={styles.redirectIcon}
-                            />
-                    </View>
-                </View>
-                </TouchableOpacity>
+                            </View>
+                            <View style={styles.encaseRedirectIcon}>
+                                <Image
+                                    source={require('../assets/redirectIcon.png')}
+                                    style={styles.redirectIcon}
+                                />
+                            </View>
+                        </View>
+                    </TouchableOpacity>
                 </AnimatedLinearGradient>
 
             </Card>
@@ -69,11 +68,11 @@ export default ItemCard
 
 const styles = StyleSheet.create({
     cardOuterView: {
-      
-        
+
+
     },
     cardContainer: {
-        
+
         borderRadius: 10,
         borderColor: 'black',
         borderWidth: 2,
@@ -118,7 +117,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     encasingViewMargin: {
-        flexDirection : 'row',
+        flexDirection: 'row',
         justifyContent: 'space-evenly'
     },
     encaseRedirectIcon: {

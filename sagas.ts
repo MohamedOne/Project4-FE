@@ -2,7 +2,6 @@ import axios from 'axios';
 import { call, put, takeEvery, takeLatest } from 'redux-saga/effects'
 
 function* merchFetchSaga() : any {
-
     yield takeLatest("SET_GET_MERCHANDISE", grabMerchOnceAgain);
 }
 

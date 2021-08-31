@@ -1,5 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react"
+import axios from "axios";
+import React, { useEffect, useState } from "react"
 import { View, TextInput, TouchableOpacity, Text, StyleSheet, Image } from "react-native"
 import Toast from "react-native-toast-message";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,14 +10,28 @@ import { IAppState } from "../redux/store";
 
 const LoginCard = () => {
 
-    const [userName, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+    const [userName, setUsername] = useState("1");
+    const [password, setPassword] = useState("2");
     const isSigningUp = useSelector((state: IAppState) => state.isSigningUp)
+
 
 
     const dispatch = useDispatch();
     const navigation = useNavigation();
-    const submit = () => {
+
+  
+
+    const addUserApi = async() => {
+        await axios.post('https://wi6pqlczjk.execute-api.us-east-1.amazonaws.com/StageZero/user', {
+            body: {
+                "username": userName,
+                "password": password
+            }
+        }).catch(err => console.log(err));
+    }
+
+    const submit =  () => {
+        console.log(userName, password);
         if (userName == "" || password === "") {
             Toast.show({
                 type: 'error',
@@ -31,7 +46,6 @@ const LoginCard = () => {
             dispatch({
                 type: AppAction.LOGIN,
                 payload: {
-                    cartCount: 0,
                     user: {
                         username: userName,
                         password: password
@@ -39,10 +53,14 @@ const LoginCard = () => {
                 }
             })
 
+            addUserApi();
+
+
             navigation.goBack();
         }
-        
+
     }
+
 
     const redirectToSignUp = () => {
         dispatch({
@@ -50,47 +68,47 @@ const LoginCard = () => {
             payload: {
                 isSigningUp: true
             }
-            
+
         })
-    
+
     }
 
     return (
         <View style={styles.outerContainer}>
-        <TextInput
-            style={styles.input}
-            placeholder="Username"
-            placeholderTextColor="black"
-            onChangeText={text => setUsername(text)}
-            keyboardType="ascii-capable"
-        />
-        <TextInput
-            style={styles.input}
-            onChangeText={text => setPassword(text)}
-            placeholderTextColor="black"
-            placeholder="Password"
-            secureTextEntry={true}
-        />
-        <TouchableOpacity
-            style={styles.working}
-            onPress={() => submit()}>
-            <Text
-                style={styles.text}>Submit</Text>
-        </TouchableOpacity>
+            <TextInput
+                style={styles.input}
+                placeholder="Username"
+                placeholderTextColor="black"
+                onChangeText={(text) => setUsername(text)}
+                keyboardType="ascii-capable"
+            />
+            <TextInput
+                style={styles.input}
+                onChangeText={(text) => setPassword(text)}
+                placeholderTextColor="black"
+                placeholder="Password"
+                secureTextEntry={true}
+            />
+            <TouchableOpacity
+                style={styles.working}
+                onPress={() => submit()}>
+                <Text
+                    style={styles.text}>Submit</Text>
+            </TouchableOpacity>
 
-        <TouchableOpacity 
-                    onPress={redirectToSignUp}
-                >
+            <TouchableOpacity
+                onPress={redirectToSignUp}
+            >
                 <Text style={styles.newUserText}>New User? Sign Up</Text>
                 <Image
-                        source={require('../assets/hypercube.png')}
-                        style={styles.smallImage}
-                    />
+                    source={require('../assets/hypercube.png')}
+                    style={styles.smallImage}
+                />
 
-                </TouchableOpacity>
-    </View>
+            </TouchableOpacity>
+        </View>
 
-    
+
     )
 }
 export default LoginCard

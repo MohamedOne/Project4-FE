@@ -50,7 +50,6 @@ const Account: React.FC = (props: any) => {
             dispatch({
                 type: AppAction.LOGIN,
                 payload: {
-                    cartCount: 0,
                     user: {
                         username: userName,
                         password: password
